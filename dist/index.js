@@ -56,6 +56,7 @@ module.exports = require("os");
 const core = __webpack_require__(470)
 const assert = __webpack_require__(487)
 const fs = __webpack_require__(747)
+const exec = __webpack_require__(129).exec
 
 const creds = JSON.parse(core.getInput('creds'))
 assert(Array.isArray(creds), 'creds input must be an array')
@@ -77,15 +78,29 @@ creds.forEach(cred => {
   credsString += credString
 })
 
-fs.appendFile('~/.netrc', credsString, err => {
-  if (err) {
-    console.error(err)
-    return core.setFailed(err.message)
+exec('touch ~/.netrc', (error, stdout, stderr) => {
+  console.log(stdout)
+  console.error(stderr)
+  if (error !== null) {
+    console.error(`exec error: ${error}`)
   }
+  fs.appendFile('~/.netrc', credsString, err => {
+    if (err) {
+      console.error(err)
+      return core.setFailed(err.message)
+    }
 
-  console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+    console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+  })
 })
 
+
+/***/ }),
+
+/***/ 129:
+/***/ (function(module) {
+
+module.exports = require("child_process");
 
 /***/ }),
 
