@@ -1,8 +1,8 @@
-name: 'Install Terraform'
-description: 'Installs any version of terraform to the current job environment'
+name: 'Netrc Credentials'
+description: 'Sets up netrc credentials'
 branding:
-  icon: type
-  color: purple
+  icon: key
+  color: yellow
 runs:
   using: 'node12'
   main: 'dist/index.js'
