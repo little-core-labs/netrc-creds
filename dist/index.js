@@ -53,29 +53,39 @@ module.exports = require("os");
 /***/ 104:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
-const exec = __webpack_require__(129).exec
 const core = __webpack_require__(470)
-const path = __webpack_require__(622)
+const assert = __webpack_require__(487)
+const fs = __webpack_require__(747)
 
-const scriptPath = __webpack_require__.ab + "run.sh"
+const creds = JSON.parse(core.getInput('creds'))
+assert(Array.isArray(creds), 'creds input must be an array')
 
-const version = core.getInput('version')
+let credsString = ''
 
-exec(`${scriptPath} ${version}`, (error, stdout, stderr) => {
-  console.log(stdout)
-  console.log(stderr)
-  if (error !== null) {
-    console.log(`exec error: ${error}`)
-  }
+creds.forEach(cred => {
+  assert(cred.machine, 'cred has a machine field')
+  assert(cred.login, 'cred has a login field')
+  assert(cred.password, 'cred has a password field')
+
+  let credString = ''
+
+  credString += `machine ${cred.machine}\n`
+  credString += `login ${cred.login}\n`
+  credString += `password ${cred.password}\n`
+  credString += '\n'
+
+  credsString += credString
 })
 
+fs.appendFile('~/.netrc', credsString, err => {
+  if (err) {
+    console.error(err)
+    return core.setFailed(err.message)
+  }
 
-/***/ }),
+  console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+})
 
-/***/ 129:
-/***/ (function(module) {
-
-module.exports = require("child_process");
 
 /***/ }),
 
@@ -373,10 +383,42 @@ exports.getState = getState;
 
 /***/ }),
 
+/***/ 487:
+/***/ (function(module) {
+
+module.exports = assert
+
+class AssertionError extends Error {}
+AssertionError.prototype.name = 'AssertionError'
+
+/**
+ * Minimal assert function
+ * @param  {any} t Value to check if falsy
+ * @param  {string=} m Optional assertion error message
+ * @throws {AssertionError}
+ */
+function assert (t, m) {
+  if (!t) {
+    var err = new AssertionError(m)
+    if (Error.captureStackTrace) Error.captureStackTrace(err, assert)
+    throw err
+  }
+}
+
+
+/***/ }),
+
 /***/ 622:
 /***/ (function(module) {
 
 module.exports = require("path");
+
+/***/ }),
+
+/***/ 747:
+/***/ (function(module) {
+
+module.exports = require("fs");
 
 /***/ })
 
