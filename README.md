@@ -11,7 +11,7 @@ Create a workflow `.yml` file in your repositories `.github/workflows` directory
 
 ### Inputs
 
-- `creds`: An array of credential objects (`machine`, `login`, `password`).  Required.
+- `creds`: A JSON array of credential objects (`machine`, `login`, `password`).  Required.  Github actions doesn't support strucutred input.  womp.
 
 ### Outputs
 
@@ -46,12 +46,12 @@ jobs:
             {
               "machine": "github.com",
               "login": "${{env.login}}",
-              "password": "1234"
+              "password": "${{ secrets.GH_MACHINE_TOKEN }}"
             },
             {
               "machine": "api.github.com",
               "login": "${{env.login}}",
-              "password": "1234"
+              "password": "${{ secrets.GH_MACHINE_TOKEN }}"
             }
           ]
 ```
