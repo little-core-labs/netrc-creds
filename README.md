@@ -1,8 +1,7 @@
-# install-terraform
-Install Terraform to a Github Actions job environment.
+# netrc-creds
+Install Credentials to your Github Actions netrc file.  Useful for authenticating access to additional GitHub resources.
 
-<a href="https://github.com/little-core-labs/install-terraform"><img alt="GitHub Actions status" src="https://github.com/little-core-labs/install-terraform/workflows/Tests/badge.svg"></a>
-
+<a href="https://github.com/little-core-labs/netrc-creds"><img alt="GitHub Actions status" src="https://github.com/little-core-labs/netrc-creds/workflows/Tests/badge.svg"></a>
 
 ## Usage
 
@@ -12,7 +11,7 @@ Create a workflow `.yml` file in your repositories `.github/workflows` directory
 
 ### Inputs
 
-- `version`: The version of terraform to install. Default: 0.12.21
+- `creds`: An array of credential objects (`machine`, `login`, `password`).  Required.
 
 ### Outputs
 
@@ -21,9 +20,12 @@ None.
 ### Example workflow
 
 ```yaml
-name: Example installing Terraform
+name: Example installing netrc creds
 
 on: [push]
+
+env:
+  - login: l12s-bot
 
 jobs:
   build:
@@ -36,13 +38,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install Terraform
-      uses: little-core-labs/install-terraform@v1
-    - name: Terraform apply
-      run: |
-        terraform init
-        terraform plan
-        terraform apply -auto-approve
+    - name: Apply netrc creds
+      uses: little-core-labs/netrc-creds@v1
+      with:
+        - creds:
+          - machine: github.com
+            login: ${{ env.login }}
+            password: ${{ secrets.GH_MACHINE_TOKEN }}
+          - machine: api.github.com
+            login: ${{ env.login }}
+            password: ${{ secrets.GH_MACHINE_TOKEN }}
 ```
 
 ## License

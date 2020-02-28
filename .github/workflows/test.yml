@@ -21,9 +21,14 @@ jobs:
       run: |
         npm i
         npm test
-    - name: Install Terraform
-      uses: little-core-labs/install-terraform@master
-    - name: Terraform version
-      run: |
-        terraform version
+    - name: Apply netrc creds
+      uses: little-core-labs/netrc-creds@master
+      with:
+        - creds:
+          - machine: github.com
+            login: ${{ env.login }}
+            password: 1234
+          - machine: api.github.com
+            login: ${{ env.login }}
+            password: 1234
 

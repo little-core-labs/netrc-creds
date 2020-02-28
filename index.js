@@ -4,12 +4,14 @@ const path = require('path')
 
 const scriptPath = path.resolve(__dirname, 'run.sh')
 
-const version = core.getInput('version')
+const version = core.getInput('creds')
 
-exec(`${scriptPath} ${version}`, (error, stdout, stderr) => {
-  console.log(stdout)
-  console.log(stderr)
-  if (error !== null) {
-    console.log(`exec error: ${error}`)
-  }
-})
+console.log(creds)
+
+// exec(`${scriptPath} ${version}`, (error, stdout, stderr) => {
+//   console.log(stdout)
+//   console.log(stderr)
+//   if (error !== null) {
+//     console.log(`exec error: ${error}`)
+//   }
+// })
