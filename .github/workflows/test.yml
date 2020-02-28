@@ -28,10 +28,10 @@ jobs:
       uses: little-core-labs/netrc-creds@master
       with:
         creds:
-          - machine: github.com
-            login: ${{ env.login }}
-            password: 1234
-          - machine: api.github.com
-            login: ${{ env.login }}
-            password: 1234
+        - machine: github.com
+          login: ${{ env.login }}
+          password: 1234
+        - machine: api.github.com
+          login: ${{ env.login }}
+          password: 1234
 
