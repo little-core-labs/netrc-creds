@@ -1,7 +1,7 @@
 name: 'Netrc Credentials'
 description: 'Sets up netrc credentials'
 branding:
-  icon: key
+  icon: lock
   color: yellow
 runs:
   using: 'node12'
