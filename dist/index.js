@@ -57,6 +57,7 @@ const core = __webpack_require__(470)
 const assert = __webpack_require__(487)
 const fs = __webpack_require__(747)
 const exec = __webpack_require__(129).exec
+const path = __webpack_require__(622)
 
 const creds = JSON.parse(core.getInput('creds'))
 assert(Array.isArray(creds), 'creds input must be an array')
@@ -78,13 +79,15 @@ creds.forEach(cred => {
   credsString += credString
 })
 
-exec('touch ~/.netrc', (error, stdout, stderr) => {
+const netrc = path.resolve('~/.netrc')
+
+exec(`touch ${netrc}`, (error, stdout, stderr) => {
   console.log(stdout)
   console.error(stderr)
   if (error !== null) {
     console.error(`exec error: ${error}`)
   }
-  fs.appendFile('~/.netrc', credsString, err => {
+  fs.appendFile(netrc, credsString, err => {
     if (err) {
       console.error(err)
       return core.setFailed(err.message)
