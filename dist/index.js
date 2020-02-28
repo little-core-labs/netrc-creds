@@ -58,6 +58,7 @@ const assert = __webpack_require__(487)
 const fs = __webpack_require__(747)
 const exec = __webpack_require__(129).exec
 const path = __webpack_require__(622)
+const os = __webpack_require__(87)
 
 const creds = JSON.parse(core.getInput('creds'))
 assert(Array.isArray(creds), 'creds input must be an array')
@@ -79,7 +80,7 @@ creds.forEach(cred => {
   credsString += credString
 })
 
-const netrc = path.resolve('~/.netrc')
+const netrc = path.resolve(os.homedir(), '.netrc')
 
 exec(`touch ${netrc}`, (error, stdout, stderr) => {
   console.log(stdout)
