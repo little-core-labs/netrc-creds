@@ -2,6 +2,7 @@ const core = require('@actions/core')
 const assert = require('nanoassert')
 const fs = require('fs')
 const exec = require('child_process').exec
+const path = require('path')
 
 const creds = JSON.parse(core.getInput('creds'))
 assert(Array.isArray(creds), 'creds input must be an array')
@@ -23,13 +24,15 @@ creds.forEach(cred => {
   credsString += credString
 })
 
-exec('touch ~/.netrc', (error, stdout, stderr) => {
+const netrc = path.resolve('~/.netrc')
+
+exec(`touch ${netrc}`, (error, stdout, stderr) => {
   console.log(stdout)
   console.error(stderr)
   if (error !== null) {
     console.error(`exec error: ${error}`)
   }
-  fs.appendFile('~/.netrc', credsString, err => {
+  fs.appendFile(netrc, credsString, err => {
     if (err) {
       console.error(err)
       return core.setFailed(err.message)
