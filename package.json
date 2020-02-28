@@ -1,0 +1,42 @@
+{
+  "name": "install-terraform",
+  "version": "0.0.7",
+  "private": true,
+  "description": "Install Terraform at any version to a Github Action Job environment",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard",
+    "release": "git push --follow-tags && gh-release",
+    "version": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
+    "prepare": "ncc build index.js -o dist -s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/little-core-labs/install-terraform.git"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "terraform"
+  ],
+  "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/little-core-labs/install-terraform/issues"
+  },
+  "homepage": "https://github.com/little-core-labs/install-terraform#readme",
+  "dependencies": {
+    "@actions/core": "1.2.2"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.21.1",
+    "auto-changelog": "^1.16.2",
+    "gh-release": "^3.5.0",
+    "standard": "^14.3.1"
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
+  }
+}
