@@ -27,8 +27,6 @@ creds.forEach(cred => {
 
 const netrc = path.resolve(os.homedir(), '.netrc')
 
-console.log(netrc)
-
 exec(`touch ${netrc}`, (error, stdout, stderr) => {
   console.log(stdout)
   console.error(stderr)
