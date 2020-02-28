@@ -3,6 +3,7 @@ const assert = require('nanoassert')
 const fs = require('fs')
 const exec = require('child_process').exec
 const path = require('path')
+const os = require('os')
 
 const creds = JSON.parse(core.getInput('creds'))
 assert(Array.isArray(creds), 'creds input must be an array')
@@ -24,7 +25,7 @@ creds.forEach(cred => {
   credsString += credString
 })
 
-const netrc = path.resolve('~/.netrc')
+const netrc = path.resolve(os.homedir(), '.netrc')
 
 exec(`touch ${netrc}`, (error, stdout, stderr) => {
   console.log(stdout)
