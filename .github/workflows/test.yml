@@ -40,4 +40,7 @@ jobs:
               "password": "1234"
             }
           ]
+    - name: Look at results
+      run: |
+        cat ~/.netrc
 

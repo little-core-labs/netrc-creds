@@ -7,7 +7,7 @@
   "scripts": {
     "test": "standard",
     "release": "git push --follow-tags && gh-release",
-    "version": "ncc build index.js -o dist -s && auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md dist"
+    "version": "rm -rf dist && ncc build index.js -o dist -s && auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md dist"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/little-core-labs/netrc-creds#readme",
   "dependencies": {
-    "@actions/core": "1.2.2"
+    "@actions/core": "1.2.2",
+    "nanoassert": "^2.0.0"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.21.1",

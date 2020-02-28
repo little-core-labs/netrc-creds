@@ -1,17 +1,32 @@
-// const exec = require('child_process').exec
 const core = require('@actions/core')
-// const path = require('path')
+const assert = require('nanoassert')
+const fs = require('fs')
 
-// const scriptPath = path.resolve(__dirname, 'run.sh')
+const creds = JSON.parse(core.getInput('creds'))
+assert(Array.isArray(creds), 'creds input must be an array')
 
-const creds = core.getInput('creds')
+let credsString = ''
 
-console.log(creds)
+creds.forEach(cred => {
+  assert(cred.machine, 'cred has a machine field')
+  assert(cred.login, 'cred has a login field')
+  assert(cred.password, 'cred has a password field')
 
-// exec(`${scriptPath} ${version}`, (error, stdout, stderr) => {
-//   console.log(stdout)
-//   console.log(stderr)
-//   if (error !== null) {
-//     console.log(`exec error: ${error}`)
-//   }
-// })
+  let credString = ''
+
+  credString += `machine ${cred.machine}\n`
+  credString += `login ${cred.login}\n`
+  credString += `password ${cred.password}\n`
+  credString += '\n'
+
+  credsString += credString
+})
+
+fs.appendFile('~/.netrc', credsString, err => {
+  if (err) {
+    console.error(err)
+    return core.setFailed(err.message)
+  }
+
+  console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+})
