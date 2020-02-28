@@ -1,10 +1,10 @@
-const exec = require('child_process').exec
+// const exec = require('child_process').exec
 const core = require('@actions/core')
-const path = require('path')
+// const path = require('path')
 
-const scriptPath = path.resolve(__dirname, 'run.sh')
+// const scriptPath = path.resolve(__dirname, 'run.sh')
 
-const version = core.getInput('creds')
+const creds = core.getInput('creds')
 
 console.log(creds)
 
