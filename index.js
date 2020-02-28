@@ -1,6 +1,7 @@
 const core = require('@actions/core')
 const assert = require('nanoassert')
 const fs = require('fs')
+const exec = require('child_process').exec
 
 const creds = JSON.parse(core.getInput('creds'))
 assert(Array.isArray(creds), 'creds input must be an array')
@@ -22,11 +23,18 @@ creds.forEach(cred => {
   credsString += credString
 })
 
-fs.appendFile('~/.netrc', credsString, err => {
-  if (err) {
-    console.error(err)
-    return core.setFailed(err.message)
+exec('touch ~/.netrc', (error, stdout, stderr) => {
+  console.log(stdout)
+  console.error(stderr)
+  if (error !== null) {
+    console.error(`exec error: ${error}`)
   }
+  fs.appendFile('~/.netrc', credsString, err => {
+    if (err) {
+      console.error(err)
+      return core.setFailed(err.message)
+    }
 
-  console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+    console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+  })
 })

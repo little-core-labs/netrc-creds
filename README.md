@@ -41,13 +41,19 @@ jobs:
     - name: Apply netrc creds
       uses: little-core-labs/netrc-creds@v1
       with:
-        - creds:
-          - machine: github.com
-            login: ${{ env.login }}
-            password: ${{ secrets.GH_MACHINE_TOKEN }}
-          - machine: api.github.com
-            login: ${{ env.login }}
-            password: ${{ secrets.GH_MACHINE_TOKEN }}
+        creds: |
+          [
+            {
+              "machine": "github.com",
+              "login": "${{env.login}}",
+              "password": "1234"
+            },
+            {
+              "machine": "api.github.com",
+              "login": "${{env.login}}",
+              "password": "1234"
+            }
+          ]
 ```
 
 ## License
