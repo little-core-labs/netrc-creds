@@ -10,4 +10,5 @@ inputs:
   creds:
     description: 'YAML Array of credential objects (`machine`, `login`, `password`)'
     required: true
-outputs: # none
+outputs:
+# None
