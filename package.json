@@ -30,7 +30,7 @@
     "nanoassert": "^2.0.0"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.21.1",
+    "@zeit/ncc": "^0.22.3",
     "auto-changelog": "^1.16.2",
     "gh-release": "^3.5.0",
     "standard": "^14.3.1"
