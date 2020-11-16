@@ -30,7 +30,7 @@
     "nanoassert": "^2.0.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.22.3",
+    "@vercel/ncc": "^0.25.1",
     "auto-changelog": "^2.2.0",
     "gh-release": "^4.0.3",
     "standard": "^16.0.0"
