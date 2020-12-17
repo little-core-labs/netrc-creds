@@ -1,6 +1,6 @@
 name: Tests
 
-on: [push]
+on: [push, pull_request]
 
 env:
   login: l12s-bot
@@ -43,4 +43,12 @@ jobs:
     - name: Look at results
       run: |
         cat ~/.netrc
-
+  
+  automerge:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v1
+        if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+        with:
+          github-token: ${{secrets.github_token}}
