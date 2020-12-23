@@ -39,7 +39,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Apply netrc creds
-      uses: little-core-labs/netrc-creds@v1
+      uses: little-core-labs/netrc-creds@v2.0.0
       with:
         creds: |
           [
