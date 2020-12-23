@@ -39,7 +39,6 @@ exec(`touch ${netrc}`, (error, stdout, stderr) => {
     if (error !== null) {
       console.error(`exec error: ${error}`)
     }
-    
     fs.appendFile(netrc, credsString, err => {
       if (err) {
         console.error(err)
