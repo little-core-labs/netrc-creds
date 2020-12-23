@@ -33,12 +33,19 @@ exec(`touch ${netrc}`, (error, stdout, stderr) => {
   if (error !== null) {
     console.error(`exec error: ${error}`)
   }
-  fs.appendFile(netrc, credsString, err => {
-    if (err) {
-      console.error(err)
-      return core.setFailed(err.message)
+  exec(`chmod 600 ${netrc}`, (error, stdout, stderr) => {
+    console.log(stdout)
+    console.error(stderr)
+    if (error !== null) {
+      console.error(`exec error: ${error}`)
     }
+    fs.appendFile(netrc, credsString, err => {
+      if (err) {
+        console.error(err)
+        return core.setFailed(err.message)
+      }
 
-    console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+      console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+    })
   })
 })
