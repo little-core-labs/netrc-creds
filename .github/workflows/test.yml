@@ -24,7 +24,19 @@ jobs:
       run: |
         npm i
         npm test
-    - name: Apply netrc creds
+    - name: Apply netrc creds with direct input
+      uses: little-core-labs/netrc-creds@master
+      with:
+        machine: some.other.api.com
+        login: person
+        password: 1234qwer
+    - name: Apply netrc creds with direct input again
+      uses: little-core-labs/netrc-creds@master
+      with:
+        machine: another.api.com
+        login: person
+        password: 1234qwer
+    - name: Apply netrc creds json block
       uses: little-core-labs/netrc-creds@master
       with:
         creds: |
@@ -43,7 +55,7 @@ jobs:
     - name: Look at results
       run: |
         cat ~/.netrc
-  
+
   automerge:
     needs: build
     runs-on: ubuntu-latest

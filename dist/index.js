@@ -12,10 +12,37 @@ const exec = __webpack_require__(129).exec
 const path = __webpack_require__(622)
 const os = __webpack_require__(87)
 
-const creds = JSON.parse(core.getInput('creds'))
+const machine = core.getInput('machine')
+if (machine) assert(typeof machine === 'string', 'machine input must be a string')
+const login = core.getInput('login')
+if (login) assert(typeof login === 'string', 'login input must be a string')
+const password = core.getInput('password')
+if (password) assert(typeof password === 'string', 'password input must be a string')
+
+const credsInput = core.getInput('creds')
+
+const creds = credsInput ? JSON.parse(credsInput) : []
+
 assert(Array.isArray(creds), 'creds input must be an array')
 
+assert(creds || machine || login || password, 'you must pass a machine,login,password combo, or a creds JSON field.')
+
 let credsString = ''
+
+if (machine || login || password) {
+  assert(password != null, 'password must be defined')
+  assert(login != null, 'login must be defined')
+  assert(machine != null, 'machine must be defined')
+
+  let credString = ''
+
+  credString += `machine ${machine}\n`
+  credString += `login ${login}\n`
+  credString += `password ${password}\n`
+  credString += '\n'
+
+  credsString += credString
+}
 
 creds.forEach(cred => {
   assert(cred.machine, 'cred has a machine field')
@@ -52,7 +79,7 @@ exec(`touch ${netrc}`, (error, stdout, stderr) => {
         return core.setFailed(err.message)
       }
 
-      console.log(`wrote ${creds.length} credentials to ~/.netrc`)
+      console.log('wrote credentials to ~/.netrc')
     })
   })
 })

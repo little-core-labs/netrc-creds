@@ -8,5 +8,14 @@ runs:
   main: 'dist/index.js'
 inputs:
   creds:
-    description: 'YAML Array of credential objects (`machine`, `login`, `password`)'
-    required: true
+    description: 'JSON array of object with (`machine`, `login`, `password`) fields.'
+    required: false
+  machine:
+    description: 'machine string to append'
+    required: false
+  login:
+    description: 'login field to append'
+    required: false
+  password:
+    description: password field to append
+    required: false

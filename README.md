@@ -11,7 +11,12 @@ Create a workflow `.yml` file in your repositories `.github/workflows` directory
 
 ### Inputs
 
-- `creds`: A JSON array of credential objects (`machine`, `login`, `password`).  Required.  Github actions doesn't support strucutred input.  womp.
+- `machine`: Single entry mode machine.
+- `login`: Single entry mode login.
+- `password`: Single entry mode password.
+- `creds`: A JSON array of credential objects (`machine`, `login`, `password`).  Optional.  Github actions doesn't support strucutred input.  womp.
+
+Either a `creds` field, and/or a `machine`/`login`/`password` combo must be passed.
 
 ### Outputs
 
@@ -38,7 +43,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Apply netrc creds
+    - name: Apply netrc creds with direct input
+      uses: little-core-labs/netrc-creds@master
+      with:
+        machine: some.other.api.com
+        login: person
+        password: 1234qwer # store this in secrets
+    - name: Apply netrc creds with direct input again
+      uses: little-core-labs/netrc-creds@master
+      with:
+        machine: another.api.com
+        login: person
+        password: 1234qwer # store this in secrets
+    - name: Apply netrc creds with a JSON block
       uses: little-core-labs/netrc-creds@v2.0.0
       with:
         creds: |
