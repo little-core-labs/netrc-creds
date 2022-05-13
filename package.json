@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/little-core-labs/netrc-creds#readme",
   "dependencies": {
-    "@actions/core": "1.8.0",
+    "@actions/core": "1.8.1",
     "nanoassert": "^2.0.0"
   },
   "devDependencies": {
